@@ -36,4 +36,6 @@ var booksOnHand = [
 		"yearPublished" : "2003"
 	}
 
-];
+]
+
+exports.booksOnHand = booksOnHand; 
