@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient
 var Fuse = require('fuse.js');
-//enter the name of the module here .
 var menusModule = require('./bookInventory.js');
 var booksOnHand = menusModule.booksOnHand;
 var url = 'mongodb://localhost:27017/Books';
@@ -14,7 +13,6 @@ var options = {
 	keys: ['author', 'name', 'yearPublished'],
 	caseSensitive: false
 }
-
 
 //enter the name of the database here.
 MongoClient.connect(url,function(err, database) {
@@ -33,28 +31,17 @@ app.get('/', function(req, res) {
 });
 
 app.post('/search', function(req, res) {
+	var fusionObject;
 	var searchString = req.body.name;
 	console.log("this is what the user searched ", searchString);
 	db.collection('inventory').find({}).toArray(function(err, results) {
 		if(err) 
 			console.log(err);
-		console.log(results);
-
-	});
-	// for(var i = 0; i < results; i++)
-	// 	console.log(results[i]);
-	// console.log("end of the while loop")
-    /*
-    //This finds a book, when the user enters the name of the book.
-	var fusionObject = new Fuse(booksOnHand,options);
-    var results = db.collection('inventory').findOne({name: searchString})
-    	.then(function(items) {
-    		console.log(items);
-    		callback(items);
-    	});
-    */	
-    //var output = fusionObject.search(searchString);
-
-   
+		//console.log(results);
+		fusionObject = new Fuse(results, options);
+		var output = fusionObject.search(searchString);
+	    for(var i = 0; i < output.length; i++)
+			console.log(output[i]);
+	});   
 });
 
