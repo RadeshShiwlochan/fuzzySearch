@@ -2,5 +2,6 @@ This is a minimalist app that uses the fuse module for fuzzy search of data in a
 
 Next steps for this app will be to print the results to another view.
 
+Module From:
 https://github.com/krisk/Fuse
 http://www.javascriptoo.com/fuse-js
